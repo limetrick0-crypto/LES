@@ -1,0 +1,27 @@
+name: LOKLES
+
+options:
+  bundleIdPrefix: de.lokles
+  deploymentTarget:
+    iOS: "16.0"
+
+targets:
+  LOKLES:
+    type: application
+    platform: iOS
+    deploymentTarget: "16.0"
+
+    sources:
+      - path: .
+        excludes:
+          - project.yml
+
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: de.lokles.app
+        PRODUCT_NAME: LOK LES
+        INFOPLIST_KEY_CFBundleDisplayName: LOK LES
+        GENERATE_INFOPLIST_FILE: YES
+        TARGETED_DEVICE_FAMILY: "1"
+        SWIFT_VERSION: "5.0"
+        IPHONEOS_DEPLOYMENT_TARGET: "16.0"
