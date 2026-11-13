@@ -1,0 +1,39 @@
+workflows:
+  lokles-ios:
+    name: LOK LES IPA Build
+    instance_type: mac_mini_m2
+    max_build_duration: 60
+
+    environment:
+      xcode: latest
+
+    scripts:
+      - name: Install XcodeGen
+        script: |
+          brew install xcodegen
+
+      - name: Generate Xcode project
+        script: |
+          cd LOKLES
+          xcodegen generate
+
+      - name: Build LOK LES
+        script: |
+          xcodebuild \
+            -project LOKLES/LOKLES.xcodeproj \
+            -scheme LOKLES \
+            -configuration Release \
+            -sdk iphoneos \
+            -derivedDataPath build \
+            CODE_SIGNING_ALLOWED=NO \
+            build
+
+      - name: Create IPA
+        script: |
+          mkdir -p Payload
+          cp -R build/Build/Products/Release-iphoneos/LOKLES.app Payload/
+          zip -r LOK-LES.ipa Payload
+
+    artifacts:
+      - LOK-LES.ipa
+      - /tmp/xcodebuild_logs/*.log
